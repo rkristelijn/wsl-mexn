@@ -78,6 +78,7 @@ Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
 System | Performance (ms) | Notes
 --- | --- | ---
 Windows WSL | 20552 | 
+Debian VirtualBox | 20708 | 
 
 System | Performance 
 --- | --- 
