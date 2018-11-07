@@ -2,6 +2,83 @@
 
 Below is a comparison from one of the resources I used. I don't think the comparison is done using the same hardware, but the big take away is that Windows without WSL is a no-go, and Windows WSL underperforms for Linux on bare metal and even Virtual Linux on a Windows Guest. I still have to do this comparison myself using my Udoo with dualboot. 
 
+## Benchmark
+
+**What am I testing?** - As we, as web developers use webpack very often, so I just tried to run npm start on my project https://github.com/kristelijn/lean-mean.
+**Hardware** - HP Elitebook on Windows Enterprise (encrypted ssd)
+systeminfo gives:
+```
+C:\Users\remi.kristelijn>systeminfo
+
+Host Name:                 Lappie
+OS Name:                   Microsoft Windows 10 Enterprise
+OS Version:                10.0.17134 N/A Build 17134
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Member Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Owner
+Registered Organization:   Owner
+Product ID:                00xxx-00000-0000x-xxx
+Original Install Date:     9-10-2018, 06:33:20
+System Boot Time:          7-11-2018, 06:21:23
+System Manufacturer:       HP
+System Model:              HP EliteBook 820 G3
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 78 Stepping 3 GenuineIntel ~2396 Mhz
+BIOS Version:              HP N75 Ver. 01.29, 4-6-2018
+Windows Directory:         C:\WINDOWS
+System Directory:          C:\WINDOWS\system32
+Boot Device:               \Device\HarddiskVolume2
+System Locale:             nl;Dutch (Netherlands)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+Total Physical Memory:     8.069 MB
+Available Physical Memory: 2.206 MB
+Virtual Memory: Max Size:  12.421 MB
+Virtual Memory: Available: 4.876 MB
+Virtual Memory: In Use:    7.545 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    Domain
+Logon Server:              \\Server
+Hotfix(s):                 5 Hotfix(s) Installed.
+                           [01]: KB4100347
+                           [02]: KB4287903
+                           [03]: KB4456655
+                           [04]: KB4462930
+                           [05]: KB4462919
+Network Card(s):           4 NIC(s) Installed.
+                           [01]: VirtualBox Host-Only Ethernet Adapter
+                                 Connection Name: VirtualBox Host-Only Network
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 192.168.xxx.xxx
+                                 [02]: fe80::cd57:ddee:xxxx:xxxx
+                           [02]: Intel(R) Ethernet Connection I219-LM
+                                 Connection Name: Ethernet
+                                 Status:          Media disconnected
+                           [03]: Intel(R) Dual Band Wireless-AC 8260
+                                 Connection Name: Wi-Fi
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     192.168.x.x
+                                 IP address(es)
+                                 [01]: 192.168.xxx.xxx
+                                 [02]: fe80::a9ff:5f59:xxxx:xxxx
+                                 [03]: 2001:1c03:3d06:6f00:318a:b624:xxxx:xxxx
+                                 [04]: 2001:1c03:3d06:6f00:a9ff:5f59:xxxx:xxxx
+                           [04]: Bluetooth Device (Personal Area Network)
+                                 Connection Name: Bluetooth Network Connection
+                                 Status:          Media disconnected
+Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
+                           Virtualization Enabled In Firmware: Yes
+                           Second Level Address Translation: Yes
+                           Data Execution Prevention Available: Yes
+```
+
+System | Performance (ms) | Notes
+--- | --- | ---
+Windows WSL | 20552 | 
+
 System | Performance 
 --- | --- 
 Mac Mini 2012 Core i5 10GB RAM | 217.6 sec 
