@@ -1,10 +1,51 @@
 # Overview
 
-Below is a comparison from one of the resources I used. I don't think the comparison is done using the same hardware, but the big take away is that Windows without WSL is a no-go, and Windows WSL underperforms for Linux on bare metal and even Virtual Linux on a Windows Guest. I still have to do this comparison myself using my Udoo with dualboot. 
+[Table of Content](#table-of-content)
 
-## Benchmark
+Last update: 08-NOV-2018 in the train from Eindhoven to Amsterdam. 
 
-**What am I testing?** - As we, as web developers use webpack very often, so I just tried to run npm start on my project https://github.com/kristelijn/lean-mean.
+The objective for the exercise is two-fold;
+
+1. Document every step to set up a full [Windows-based JavaScript full-stack environment using WSL](https://github.com/rkristelijn/wsl-mexn)
+2. Benchmark agains [VirtualBox Debian full-stack Javascript environment](https://github.com/rkristelijn/debian-mexn)
+
+## End result
+
+[Table of Content](#table-of-content)
+
+What you see below is two instances of bash on WSL running; one for the MongoDB, one for the API, on top that you see Visual Studio Code running on Windows, with also a integrated bash shell, running webpack for a simple [MEAN app](https://github.com/kristelijn/lean-mean).
+![end result](img/result.png)
+
+## Executive Summary
+
+Using only `npm start` it seems **both solutions perform practicly the same**. I still have to benchmark the performance of the application itself, as Windows still feels slow compared to the VBox Debian, and I have to compare the same on Linux-bare-metal, however I need to rerun all tests on a different box where I have full control on the harddisk. 
+
+# Table of Content
+- [Benchmark](#benchmark)
+    - [Hardware info](#hardware-info)
+    - [Versions](#versions)
+    - [Result](#end-result)
+- [Installation Guide](#installation-guide)
+    - [Credits](#credits)
+    - [Enabling WSL](#enabling-wsl)
+    - [Installing Linux](#installing-linux)
+    - [Installing Node.js](#installing-node.js)
+    - [Installing MongoDB](#installing-mongodb)
+    - [Developing](#developing)
+- [References](#references)
+
+# Benchmark
+
+[Table of Content](#table-of-content)
+
+**What am I testing?** - As we, as web developers, use webpack very often; I just tried to run npm start on my project [https://github.com/kristelijn/lean-mean](https://github.com/kristelijn/lean-mean) both on my VBox Debian install as the configuration below simultaniously, captured 10 runs each and calculated the average.
+
+![benchmark results](img/benchmark.png)
+
+## Hardware info
+
+[Table of Content](#table-of-content)
+
 **Hardware** - HP Elitebook on Windows Enterprise (encrypted ssd)
 systeminfo gives:
 ```
@@ -32,7 +73,7 @@ System Directory:          C:\WINDOWS\system32
 Boot Device:               \Device\HarddiskVolume2
 System Locale:             nl;Dutch (Netherlands)
 Input Locale:              en-us;English (United States)
-Time Zone:                 (UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+Time Zone:                 (UTC+01:00) Amsterdam, Berlin, Bern, Rome, STable of Contentkholm, Vienna
 Total Physical Memory:     8.069 MB
 Available Physical Memory: 2.206 MB
 Virtual Memory: Max Size:  12.421 MB
@@ -75,10 +116,21 @@ Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
                            Data Execution Prevention Available: Yes
 ```
 
-System | Performance (ms) | Notes
---- | --- | ---
-Windows WSL | 20552 | 
-Debian VirtualBox | 20708 | 
+System | Performance (ms) 
+--- | --- 
+Win10 WSL	|	20552
+VBoxDebian	|	20708
+VBoxDebian	|	20345
+VBoxDebian	|	19125
+VBoxDebian	|	20649
+Win10 WSL	|	19401
+Win10 WSL	|	20807
+VBoxDebian	|	22796
+Win10 WSL	|	19829
+VBoxDebian	|	22393
+Win10 WSL	|	18799
+
+Result from [https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219](https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219), but looking at the above I can't validate them also it seems noygal uses different systems to benchmark and or it could be that the performance today seems better than in 2017.
 
 System | Performance 
 --- | --- 
@@ -87,7 +139,9 @@ Windows WSL | 335 sec
 Linux Mint Bare Metal | 182.4 sec
 VirtualBox | 124 sec
 
-# Versions
+## Versions
+
+[Table of Content](#table-of-content)
 
 Item | Version
 --- | ---
@@ -100,16 +154,25 @@ git | v2.11.0
 gitkraken | 4.0.6
 Linux | Debian GNU/Linux 9 (stretch)
 
-# Credits
+# Installation guide
 
-# End result
-![img][result.png]
+[Table of Content](#table-of-content)
 
-# Windows 10 Fall Creators Update - Installing Node.js on Windows Subsystem for Linux (WSL)
 
-Windows just released the [windows subsystem for linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) feature to the public with its latest windows fall creator update, if you are not familiar with this feature it allows you to run linux binaries natively on windows - [F.A.Q](https://msdn.microsoft.com/en-us/commandline/wsl/faq).
+## Credits
+
+[Table of Content](#table-of-content)
+
+This post is a copy of [https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219](https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219) however tailored to run mexn (MongoDB, Express, (Angular/React/Vue/DHTMLX/Whatever) and Node) and compared to Debian instead of Ubuntu
+
+## Windows 10 Fall Creators Update - Installing Node.js on Windows Subsystem for Linux (WSL)
+
+Windows just (11-07-2016) released the [windows subsystem for linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) feature to the public with its latest windows fall creator update, if you are not familiar with this feature it allows you to run linux binaries natively on windows - [F.A.Q](https://msdn.microsoft.com/en-us/commandline/wsl/faq).
 
 ## Enabling WSL
+
+[Table of Content](#table-of-content)
+
 The feature is not enabled by default and you need to activate it, you can do it via powershell (with admin rights):
 ```
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
@@ -119,7 +182,10 @@ Or you can open: Control-Panel -> Programs -> Turn Windows feature on ro off, an
 Now to install your linux version, again two options, you can either install from Windows store (search linux) or you can turn on developer mode and open it via the command line:
 Open Settings -> Update and Security -> For developers, and Select the "Developer Mode" radio button.
 
-## Installing linux
+## Installing Linux
+
+[Table of Content](#table-of-content)
+
 For those who are not familiar with linux, fragmentation if part of the fun and there a lot of linux distributions and package management systems for it, the default installation in WSL is ubuntu and I recommend to keep it as it one of the most popular distribution around. If you need different distribution the easiest why is to install it from the windows store.
 
 Search for Linux, you can use any distro, but I use Debian (Ubuntu is derived from Debian)
@@ -154,6 +220,8 @@ That's it, you're running debian on windows!
 [reference](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide)
 
 ## Installing Node.js
+
+[Table of Content](#table-of-content)
 
 First We'll start by updating linux, for those of you that are not familiar with linux this require running the process as `root` by add the `sudo` command before the command we need to execute:
 ```
@@ -197,27 +265,10 @@ One thing you'll have to remember when use NVM is that you'll need to explicitly
 nvm use stable
 ```
 
-## Developing
+# Installing MongoDB
 
-Your windows hard disk drivers are mounted in linux under `/mnt/<drive letter>/` so you can access any folder via linux and run whatever command you need in order to get your project up and running, missing needed tools can be installed via `npm` or `apt-get` for system tools.
+[Table of Content](#table-of-content)
 
-IDE terminal integration support is still on its early days, [vscode](https://code.visualstudio.com/) offers support with minimal configuration, [guide](https://code.visualstudio.com/docs/editor/integrated-terminal). If your IDE just point to the executable (like cmd.exe) check if you can point it to `c:\Windows\System32\bash.exe`.
-
-In Visual Studio, hit settings in JSON format and add:
-```json
-{
-    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\bash.exe"
-}
-```
-
-# Check ports
-I'm used to type `sudo netstat -lptn` to see if ports are already opened or if my server is running. You need to run
-```bash
-sudo apt-get install net-tools
-```
-... to install them
-
-# MongoDB
 Note: if you are using a different distro than Debian, look for the right key and list [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/)
 ```bash
 sudo apt-get install dirmngr apt-transport-https
@@ -248,7 +299,41 @@ local   0.000GB
 bye
 ```
 
-# Sources
+## Developing
+
+[Table of Content](#table-of-content)
+
+Your windows hard disk drivers are mounted in linux under `/mnt/<drive letter>/` so you can access any folder via linux and run whatever command you need in order to get your project up and running, missing needed tools can be installed via `npm` or `apt-get` for system tools.
+
+IDE terminal integration support is still on its early days, [vscode](https://code.visualstudio.com/) offers support with minimal configuration, [guide](https://code.visualstudio.com/docs/editor/integrated-terminal). If your IDE just point to the executable (like cmd.exe) check if you can point it to `c:\Windows\System32\bash.exe`.
+
+In Visual Studio, hit settings in JSON format and add:
+```json
+{
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\bash.exe"
+}
+```
+
+# Check ports
+I'm used to type `sudo netstat -lptn` to see if ports are already opened or if my server is running. You need to run
+```bash
+sudo apt-get install net-tools
+```
+... to install them
+
+Oddly, when I run it, It doesn't show the ports of other bash instances. I could investigate more using `forever` to get my shell back after I start node and see if I see something, but that is a bit besides the point of checking if ports are already in use by another process.
+
+```
+gius@CPX-E9RIC6CL6SP:/mnt/c/Users/remi.kristelijn$ sudo netstat -lptn
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+gius@CPX-E9RIC6CL6SP:/mnt/c/Users/remi.kristelijn$
+```
+
+
+# References
+
+[Table of Content](#table-of-content)
 
 * [https://daverupert.com/2018/04/developing-on-windows-with-wsl-and-visual-studio-code/](https://daverupert.com/2018/04/developing-on-windows-with-wsl-and-visual-studio-code/) - post WSL settings for WebDev
 * [http://www.akitaonrails.com/2017/09/20/windows-subsystem-for-linux-is-good-but-not-enough-yet](http://www.akitaonrails.com/2017/09/20/windows-subsystem-for-linux-is-good-but-not-enough-yet) - performance benchmark between Windows-host-VirtualBox-Linux-Guest, Bare-metal-Linux, Windows-native, Windows-WSL and Mac 
