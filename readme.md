@@ -2,7 +2,7 @@
 
 [Table of Content](#table-of-content)
 
-Last update: 08-NOV-2018 in the train from Eindhoven to Amsterdam. 
+Last update: 12-NOV-2018 in the train from Amsterdam to Eindhoven. 
 
 The objective for the exercise is two-fold;
 
@@ -18,7 +18,13 @@ What you see below is two instances of bash on WSL running; one for the MongoDB,
 
 ## Executive Summary
 
-Using only `npm start` it seems **both solutions perform practicly the same**. I still have to benchmark the performance of the application itself, as Windows still feels slow compared to the VBox Debian, and I have to compare the same on Linux-bare-metal, however I need to rerun all tests on a different box where I have full control on the harddisk. 
+System	| speed
+--- | ---
+DebianVBox	| 100,00%
+OSX	| 118,41%
+Win10WSL	| 260,61%
+
+It seems **there is a significant delay** on Windows (2,6 times slower), even when using WSL. It is 2,6 times slower than Debian, let alone the problems you have with newline characters and different key bindings. This means **everything** runs 2,6 times slower; saving code, git work, opening VSC, beautifying, linting, testing, hitting your web server, etc. 
 
 # Table of Content
 - [Benchmark](#benchmark)
@@ -38,7 +44,18 @@ Using only `npm start` it seems **both solutions perform practicly the same**. I
 
 [Table of Content](#table-of-content)
 
-**What am I testing?** - As we, as web developers, use webpack very often; I just tried to run npm start on my project [https://github.com/kristelijn/lean-mean](https://github.com/kristelijn/lean-mean) both on my VBox Debian install as the configuration below simultaniously, captured 10 runs each and calculated the average.
+**What am I testing?** - As we, as web developers, use webpack very often; I just tried to run npm start on my project [https://github.com/kristelijn/lean-mean](https://github.com/kristelijn/lean-mean) both on my VBox Debian install as the configuration below simultaniously, captured some runs each and calculated the average.
+
+**How am I testing?** - I just take the time from `npm clean-install`. I have a script in a package.json `rimraf .next package-lock.json node_modules && npm cache verify && npm install`. As it does a lot of stuff it is a good indicator on benchmarking.
+```
+$ time npm clean-install
+> ...
+> ... 
+
+real    0m36.305s <<<<<!!!
+user    0m26.344s
+sys     0m16.156s
+```
 
 ![benchmark results](img/benchmark.png)
 
@@ -132,12 +149,17 @@ Win10 WSL	|	18799
 
 Result from [https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219](https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219), but looking at the above I can't validate them also it seems noygal uses different systems to benchmark and or it could be that the performance today seems better than in 2017.
 
-System | Performance 
+System | command | Performance 
 --- | --- 
-Mac Mini 2012 Core i5 10GB RAM | 217.6 sec 
-Windows WSL | 335 sec
-Linux Mint Bare Metal | 182.4 sec
-VirtualBox | 124 sec
+System |	command |	sum (s)
+DebianVBox	| time npm run clean-install	| 176,406
+DebianVBox	| time npm run clean-install	| 158,281
+DebianVBox	| time npm test	| 430,484
+Win10WSL	| time npm run clean-install	| 514,568
+Win10WSL	| time npm run clean-install	| 378,898
+Win10WSL	| time npm outdated	| 38,497
+Win10WSL	| time npm run clean-install	| 414,897
+OSX	| time npm run clean-install	| 198,145
 
 ## Versions
 
