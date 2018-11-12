@@ -14,6 +14,7 @@ The objective for the exercise is two-fold;
 [Table of Content](#table-of-content)
 
 What you see below is two instances of bash on WSL running; one for the MongoDB, one for the API, on top that you see Visual Studio Code running on Windows, with also a integrated bash shell, running webpack for a simple [MEAN app](https://github.com/kristelijn/lean-mean).
+
 ![end result](img/result.png)
 
 ## Executive Summary
@@ -24,7 +25,9 @@ DebianVBox	| 100,00%
 OSX	| 118,41%
 Win10WSL	| 260,61%
 
-It seems **there is a significant delay** on Windows (2,6 times slower), even when using WSL. It is 2,6 times slower than Debian, let alone the problems you have with newline characters and different key bindings. This means **everything** runs 2,6 times slower; saving code, git work, opening VSC, beautifying, linting, testing, hitting your web server, etc. 
+It seems **there is a significant delay** on Windows (2,6 times slower), even when using WSL. It is 2,6 times slower than Debian, let alone the problems you have with newline characters and different key bindings in VSC. Also copy-pasting from and to the console is a headache; you need to click on the window with the right-mouse button to paste. 
+
+This means **everything** runs 2,6 times slower; saving code, git work, opening VSC, beautifying, linting, testing, hitting your web server, etc. For good measurement I've included a MacBook Pro run.
 
 # Table of Content
 - [Benchmark](#benchmark)
@@ -133,25 +136,10 @@ Hyper-V Requirements:      VM Monitor Mode Extensions: Yes
                            Data Execution Prevention Available: Yes
 ```
 
-System | Performance (ms) 
---- | --- 
-Win10 WSL	|	20552
-VBoxDebian	|	20708
-VBoxDebian	|	20345
-VBoxDebian	|	19125
-VBoxDebian	|	20649
-Win10 WSL	|	19401
-Win10 WSL	|	20807
-VBoxDebian	|	22796
-Win10 WSL	|	19829
-VBoxDebian	|	22393
-Win10 WSL	|	18799
-
 Result from [https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219](https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219), but looking at the above I can't validate them also it seems noygal uses different systems to benchmark and or it could be that the performance today seems better than in 2017.
 
-System | command | Performance 
---- | --- 
-System |	command |	sum (s)
+System | command | sum (s) 
+--- | --- | ---
 DebianVBox	| time npm run clean-install	| 176,406
 DebianVBox	| time npm run clean-install	| 158,281
 DebianVBox	| time npm test	| 430,484
