@@ -46,9 +46,9 @@ It seems **there is a significant delay** on Windows (2,6 times slower), even wh
 
 **What am I testing?** - As we, as web developers, use webpack very often; I just tried to run npm start on my project [https://github.com/kristelijn/lean-mean](https://github.com/kristelijn/lean-mean) both on my VBox Debian install as the configuration below simultaniously, captured some runs each and calculated the average.
 
-**How am I testing?** - I just take the time from `npm clean-install`. I have a script in a package.json `rimraf .next package-lock.json node_modules && npm cache verify && npm install`. As it does a lot of stuff it is a good indicator on benchmarking.
+**How am I testing?** - I just take the time from `npm run clean-install`. I have a script in a package.json `rimraf .next package-lock.json node_modules && npm cache verify && npm install`. As it does a lot of stuff it is a good indicator on benchmarking.
 ```
-$ time npm clean-install
+$ time npm run clean-install
 > ...
 > ... 
 
